@@ -1,26 +1,8 @@
 {
-    "version":2,
-    "builds":[
-        {
-            "src":"Foods_Ordering/wsgi.py",
-            "use": "@vercel/python",
-            "config":{"maxLambdaSize":"15mb","runtime":"python3.9"}
-
-        },
-        {
-            "src":"build_files.sh",
-            "use": "@vercel/static-build",
-            "config":{"distDir":"staticfiles_build"}
-        }
-    ],
-    "routes":[
-        {
-        "src":"/static/:(.*)",
-        "dest":"/static/$1"
-    },
-    {
-        "src":"/(.*)",
-        "dest":"Foods_Ordering/wsgi.py"
-    }
+    "version": 2,
+    "builds": [{ "src": "requirements.txt", "use": "@vercel/pip" }, { "src": "manage.py", "use": "@vercel/python" }],
+    "routes": [
+        { "src": "/(.*)", "dest": "manage.py runserver 0.0.0.0:$PORT/$1" },
+        { "src": "/static/(.*)", "dest": "staticfiles/$1" }
     ]
 }
